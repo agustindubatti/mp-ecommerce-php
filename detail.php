@@ -519,9 +519,9 @@ $precio_producto = $_POST['price'];
                                         </h3>
                                     </div>
                                     <form>
-                                        <button type="submit" name="submit_btn" class="mercadopago-button"
+                                        <input type="submit" name="submit_btn" class="mercadopago-button"
                                                 formmethod="post">Pagar
-                                        </button>
+                                        </input>
                                     </form>
                                 </div>
                             </div>
