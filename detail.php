@@ -4,7 +4,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-//Notification url
 
 $nombre_producto = $_POST['title'];
 
@@ -12,7 +11,7 @@ $img_producto = substr($_POST['img'], 1);
 
 $precio_producto = (float)$_POST['price'];
 
-//$url_producto = "https://agustindubatti-mp-commerce-php.herokuapp.com" . $img_producto;
+$url_producto = "http://adubatti.com/mp-ecommerce-php" . $img_producto;
 
 
 
@@ -32,9 +31,9 @@ $preference = new MercadoPago\Preference();
 
 //...
 $preference->back_urls = array(
-    "success" => "https://agustindubatti-mp-commerce-php.herokuapp.com/success.php",
-    "failure" => "https://agustindubatti-mp-commerce-php.herokuapp.com/failure.php",
-    "pending" => "https://agustindubatti-mp-commerce-php.herokuapp.com/pending.php"
+    "success" => "http://adubatti.com/mp-ecommerce-php/success.php",
+    "failure" => "http://adubatti.com/mp-ecommerce-php/failure.php",
+    "pending" => "http://adubatti.com/mp-ecommerce-php/pending.php"
 );
 $preference->auto_return = "approved";
 
@@ -74,7 +73,7 @@ $preference->payer = $payer;
 
 $preference->external_reference = "agusdubattiok@gmail.com";
 
-$preference->notification_url = "https://www.your-site.com/ipn";
+$preference->notification_url = "http://adubatti.com/mp-ecommerce-php/ipn.php";
 
 
 # Guardar y postear la preferencia
