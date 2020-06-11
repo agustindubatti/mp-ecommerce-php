@@ -1,18 +1,21 @@
 <?php
 
+//Falta URL foto, hacer pagians de backurl, cambiat texto boton y que funcione, notification url, js seguridad en 3 mas, modal
 
 $nombre_producto = $_POST['title'];
 
 $precio_producto = $_POST['price'];
 
-if (isset($_REQUEST['submit_btn'])) {
+
 
 
     // SDK de Mercado Pago
     require __DIR__ . '/vendor/autoload.php';
 
 // Agrega credenciales
-    MercadoPago\SDK::setAccessToken('TEST-7502298592281897-032614-060b82d29b9bc43065c35a5f89aeab6c-269628431');
+    MercadoPago\SDK::setAccessToken('APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398');
+
+    MercadoPago\SDK::setIntegratorId("dev_24c65fb163bf11ea96500242ac130004");
 
 
 # Crear un objeto preferencia
@@ -62,11 +65,13 @@ if (isset($_REQUEST['submit_btn'])) {
 
     $preference->external_reference = "agusdubattiok@gmail.com";
 
+    $preference->notification_url = "https://www.your-site.com/ipn";
+
+
 # Guardar y postear la preferencia
     $preference->save();
 
 
-}
 
 echo $preference->init_point;
 
@@ -84,7 +89,7 @@ echo $preference->init_point;
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="format-detection" content="telephone=no">
-
+    <script src="https://www.mercadopago.com/v2/security.js" view="item"></script>
     <script
             src="https://code.jquery.com/jquery-3.4.1.min.js"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
