@@ -1,90 +1,3 @@
-<?php
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-//Notification url
-
-$nombre_producto = $_POST['title'];
-
-$img_producto = substr($_POST['img'], 1);
-
-$precio_producto = (float)$_POST['price'];
-
-$url_producto = "https://agustindubatti-mp-commerce-php.herokuapp.com" . $img_producto;
-
-
-
-
-    // SDK de Mercado Pago
-    require __DIR__ . '/vendor/autoload.php';
-
-// Agrega credenciales
-    MercadoPago\SDK::setAccessToken('APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398');
-
-    //MercadoPago\SDK::setIntegratorId("dev_24c65fb163bf11ea96500242ac130004");
-
-
-# Crear un objeto preferencia
-    $preference = new MercadoPago\Preference();
-
-//...
-    $preference->back_urls = array(
-        "success" => "https://agustindubatti-mp-commerce-php.herokuapp.com/success.php",
-        "failure" => "https://agustindubatti-mp-commerce-php.herokuapp.com/failure.php",
-        "pending" => "https://agustindubatti-mp-commerce-php.herokuapp.com/pending.php"
-    );
-    $preference->auto_return = "approved";
-
-
-    // Crea un ítem en la preferencia
-    $item = new MercadoPago\Item();
-    $item->id = 1234;
-    $item->title = $nombre_producto;
-    $item->description = 'Dispositivo móvil de Tienda e-commerce';
-    $item->picture_url = $url_producto;
-    $item->quantity = 1;
-    $item->unit_price = $precio_producto;
-    $preference->items = array($item);
-
-
-    $preference->payment_methods = array(
-        "excluded_payment_types" => array(array("id" => "atm")),
-        "excluded_payment_methods" => array(array("id" => "amex")),
-        "installments" => 6 //6 cuotas max
-    );
-
-    $payer = new MercadoPago\Payer();
-    $payer->name = "Lalo";
-    $payer->surname = "Landa";
-    $payer->email = "test_user_63274575@testuser.com";
-    $payer->phone = array(
-        "area_code" => "11",
-        "number" => "22223333"
-    );
-
-    $payer->address = array(
-        "street_name" => "False",
-        "street_number" => 123,
-        "zip_code" => "1111"
-    );
-    $preference->payer = $payer;
-
-    $preference->external_reference = "agusdubattiok@gmail.com";
-
-    $preference->notification_url = "https://www.your-site.com/ipn";
-
-
-# Guardar y postear la preferencia
-    $preference->save();
-
-
-
-
-?>
-
-
 <!DOCTYPE html>
 <html class="supports-animation supports-columns svg no-touch no-ie no-oldie no-ios supports-backdrop-filter as-mouseuser"
       lang="en-US">
@@ -96,11 +9,13 @@ $url_producto = "https://agustindubatti-mp-commerce-php.herokuapp.com" . $img_pr
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="format-detection" content="telephone=no">
-    <script src="https://www.mercadopago.com/v2/security.js" view="item"></script>
+
+    <script src="https://www.mercadopago.com/v2/security.js" view=""></script>
+
     <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous"></script>
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="./assets/category-landing.css" media="screen, print">
 
@@ -522,100 +437,20 @@ $url_producto = "https://agustindubatti-mp-commerce-php.herokuapp.com" . $img_pr
                 </div>
             </div>
         </div>
-        <div class="as-search-results as-filter-open as-category-landing as-desktop" id="as-search-results">
+        <div>
 
-            <div id="accessories-tab" class="as-accessories-details">
-                <div class="as-accessories" id="as-accessories">
-                    <div class="as-accessories-header">
-                        <div class="as-search-results-count">
-                            <span class="as-search-results-value"></span>
-                        </div>
-                    </div>
-                    <div class="as-searchnav-placeholder" style="height: 77px;">
-                        <div class="row as-search-navbar" id="as-search-navbar" style="width: auto;">
-                            <div class="as-accessories-filter-tile column large-6 small-3">
-
-                                <button class="as-filter-button" aria-expanded="true"
-                                        aria-controls="as-search-filters" type="button">
-                                    <h2 class=" as-filter-button-text">
-                                        Smartphones
-                                    </h2>
-                                </button>
-
-
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="as-accessories-results  as-search-desktop">
-                        <div class="width:60%">
-                            <div class="as-producttile-tilehero with-paddlenav " style="float:left;">
-                                <div class="as-dummy-container as-dummy-img">
-
-                                    <img src="./assets/wireless-headphones"
-                                         class="ir ir item-image as-producttile-image  "
-                                         style="max-width: 70%;max-height: 70%;" alt="" width="445" height="445">
-                                </div>
-                                <div class="images mini-gallery gal5 ">
-
-
-                                    <div class="as-isdesktop with-paddlenav with-paddlenav-onhover">
-                                        <div class="clearfix image-list xs-no-js as-util-relatedlink relatedlink"
-                                             data-relatedlink="6|Powerbeats3 Wireless Earphones - Neighborhood Collection - Brick Red|MPXP2">
-                                            <div class="as-tilegallery-element as-image-selected">
-                                                <div class=""></div>
-                                                <img src="./assets/003.jpg"
-                                                     class="ir ir item-image as-producttile-image" alt=""
-                                                     width="445" height="445"
-                                                     style="content:-webkit-image-set(url(<?php echo $_POST['img'] ?>) 2x);">
-                                            </div>
-
-                                        </div>
-
-
-                                    </div>
-
-
-                                </div>
-
-                            </div>
-                            <div class="as-producttile-info" style="float:left;min-height: 168px;">
-                                <div class="as-producttile-titlepricewraper" style="min-height: 128px;">
-                                    <div class="as-producttile-title">
-                                        <h3 class="as-producttile-name">
-                                            <p class="as-producttile-tilelink">
-                                                <span data-ase-truncate="2"><?php echo $_POST['title'] ?></span>
-                                            </p>
-
-                                        </h3>
-                                    </div>
-                                    <h3>
-                                        <?php echo "$" . $_POST['price'] ?>
-                                    </h3>
-                                    <h3>
-                                        <?php echo $_POST['unit'] ?>
-                                    </h3>
-                                </div>
-                                <form action="<?php echo $preference->init_point; ?>">
-                                    <button type="submit" class="mercadopago-button"
-                                            formmethod="post">Pagar la compra
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <h1>Hubo un error en tu compra!</h1>
         </div>
     </div>
-    <div role="alert" class="as-loader-text ally" aria-live="assertive"></div>
-    <div class="as-footnotes">
-        <div class="as-footnotes-content">
-            <div class="as-footnotes-sosumi">
-                Todos los derechos reservados Tienda Tecno 2019
-            </div>
+</div>
+<div role="alert" class="as-loader-text ally" aria-live="assertive"></div>
+<div class="as-footnotes ">
+    <div class="as-footnotes-content">
+        <div class="as-footnotes-sosumi">
+            Todos los derechos reservados Tienda Tecno 2018
         </div>
     </div>
+</div>
 
 </div>
 <div class="mp-mercadopago-checkout-wrapper"
