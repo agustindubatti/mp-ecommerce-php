@@ -15,71 +15,66 @@ $precio_producto = (float)$_POST['price'];
 $url_producto = "https://agustindubatti-mp-commerce-php.herokuapp.com" . $img_producto;
 
 
-
-
-    // SDK de Mercado Pago
-    require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . 'vendor/autoload.php';
 
 // Agrega credenciales
-    MercadoPago\SDK::setAccessToken('APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398');
+MercadoPago\SDK::setAccessToken('APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398');
 
-    //MercadoPago\SDK::setIntegratorId("dev_24c65fb163bf11ea96500242ac130004");
+//MercadoPago\SDK::setIntegratorId("dev_24c65fb163bf11ea96500242ac130004");
 
 
 # Crear un objeto preferencia
-    $preference = new MercadoPago\Preference();
+$preference = new MercadoPago\Preference();
 
 //...
-    $preference->back_urls = array(
-        "success" => "https://agustindubatti-mp-commerce-php.herokuapp.com/success.php",
-        "failure" => "https://agustindubatti-mp-commerce-php.herokuapp.com/failure.php",
-        "pending" => "https://agustindubatti-mp-commerce-php.herokuapp.com/pending.php"
-    );
-    $preference->auto_return = "approved";
+$preference->back_urls = array(
+    "success" => "https://agustindubatti-mp-commerce-php.herokuapp.com/success.php",
+    "failure" => "https://agustindubatti-mp-commerce-php.herokuapp.com/failure.php",
+    "pending" => "https://agustindubatti-mp-commerce-php.herokuapp.com/pending.php"
+);
+$preference->auto_return = "approved";
 
 
-    // Crea un ítem en la preferencia
-    $item = new MercadoPago\Item();
-    $item->id = 1234;
-    $item->title = $nombre_producto;
-    $item->description = 'Dispositivo móvil de Tienda e-commerce';
-    $item->picture_url = $url_producto;
-    $item->quantity = 1;
-    $item->unit_price = $precio_producto;
-    $preference->items = array($item);
+// Crea un ítem en la preferencia
+$item = new MercadoPago\Item();
+$item->id = 1234;
+$item->title = $nombre_producto;
+$item->description = 'Dispositivo móvil de Tienda e-commerce';
+$item->picture_url = $url_producto;
+$item->quantity = 1;
+$item->unit_price = $precio_producto;
+$preference->items = array($item);
 
 
-    $preference->payment_methods = array(
-        "excluded_payment_types" => array(array("id" => "atm")),
-        "excluded_payment_methods" => array(array("id" => "amex")),
-        "installments" => 6 //6 cuotas max
-    );
+$preference->payment_methods = array(
+    "excluded_payment_types" => array(array("id" => "atm")),
+    "excluded_payment_methods" => array(array("id" => "amex")),
+    "installments" => 6 //6 cuotas max
+);
 
-    $payer = new MercadoPago\Payer();
-    $payer->name = "Lalo";
-    $payer->surname = "Landa";
-    $payer->email = "test_user_63274575@testuser.com";
-    $payer->phone = array(
-        "area_code" => "11",
-        "number" => "22223333"
-    );
+$payer = new MercadoPago\Payer();
+$payer->name = "Lalo";
+$payer->surname = "Landa";
+$payer->email = "test_user_63274575@testuser.com";
+$payer->phone = array(
+    "area_code" => "11",
+    "number" => "22223333"
+);
 
-    $payer->address = array(
-        "street_name" => "False",
-        "street_number" => 123,
-        "zip_code" => "1111"
-    );
-    $preference->payer = $payer;
+$payer->address = array(
+    "street_name" => "False",
+    "street_number" => 123,
+    "zip_code" => "1111"
+);
+$preference->payer = $payer;
 
-    $preference->external_reference = "agusdubattiok@gmail.com";
+$preference->external_reference = "agusdubattiok@gmail.com";
 
-    $preference->notification_url = "https://www.your-site.com/ipn";
+$preference->notification_url = "https://www.your-site.com/ipn";
 
 
 # Guardar y postear la preferencia
-    $preference->save();
-
-
+$preference->save();
 
 
 ?>
