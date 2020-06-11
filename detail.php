@@ -68,6 +68,7 @@ if (isset($_REQUEST['submit_btn'])) {
 
 }
 
+echo $preference->init_point;
 
 ?>
 
